@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}登陆{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            height:100%;
+            width:100%;
+            background-size:100%;
+            background-image:url({% static 'image/homepage/img.jpg' %})
+        }
+        h2{
+            font-style:italic;
+        }
+         .btn {
+            background-color: #62a8ea;
+            border: none;
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin:auto;
+
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+          <form class='form-login' action="/login/" method="post">
+              {% csrf_token %}
+              <h2 class="text-center">欢迎来到登陆界面</h2>
+              {% if message %}
+                <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+
+              <div class="form-group">
+                  {{ login_form.username.label_tag }}
+                  {{ login_form.username}}
+              </div>
+
+              <div class="form-group">
+                  {{ login_form.password.label_tag }}
+                  {{ login_form.password }}
+              </div>
+              <div class="form-group">
+                  {{ login_form.captcha.errors }}
+                  {{ login_form.captcha.label_tag }}
+                  {{ login_form.captcha }}
+              </div>
+              <button type="submit" class="btn btn-default">点击登录</button>
+          </form>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}

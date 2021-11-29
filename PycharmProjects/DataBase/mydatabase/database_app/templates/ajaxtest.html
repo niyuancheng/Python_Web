@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{% static 'JS/jquery-3.5.1.js' %}"></script>
+    <script>
+      $("#btn").on("click", function () {
+
+         var formdata = new FormData();
+         formdata.append("username",$("#username").val());
+         formdata.append("photo",$("#photo")[0].files[0]);
+         formdata.append('csrfmiddlewaretoken',$('[name=csrfmiddlewaretoken]').val())
+         // 往后端发数据
+         $.ajax({
+             url: "/ajax_add/",
+             type: "post",
+             data: formdata,
+             processData:false,
+             contentType:false,
+             success: function (date) {
+                 alert("上传成功");
+             }
+          })
+      })
+    </script>
+</head>
+<body>
+    <form action="/ajax_add/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        你的头像<input type="file" name="photo" id="photo"><br>
+        你的用户名<input type="text" name="username" id="username"><br>
+        <input type="submit" value="提交保存" id="btn">
+    </form>
+
+
+</body>
+</html>

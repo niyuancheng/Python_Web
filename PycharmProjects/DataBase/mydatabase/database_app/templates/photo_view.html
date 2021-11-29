@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}照片预览{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/photoview/demo.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/photoview/component.css' %}" />
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'javascript/photo_view/modernizr.custom.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <ul id="elasticstack" class="elasticstack">
+            {% for url in message %}
+            <li>
+                <img src="{{ MEDIA_URL }}{{ url }}"/><h5>
+                美丽的风景
+                </h5>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- /container -->
+
+    <script src="{% static 'javascript/photo_view/draggabilly.pkgd.min.js' %}"></script>
+
+    <script src="{% static 'javascript/photo_view/elastiStack.js' %}"></script>
+
+    <script>
+        new ElastiStack(document.getElementById('elasticstack'));
+    </script>
+{% endblock %}

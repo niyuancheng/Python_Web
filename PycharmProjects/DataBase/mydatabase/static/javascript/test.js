@@ -1,0 +1,14 @@
+$(function(){
+    $("#btn").on("click",function(){
+        alert("点击成功");
+        $.ajax({
+            url:"/test/",
+            type:"post",
+            data:{"text":$("#txt").val()},
+            success:function(data){
+                console.log("已经提交成功")
+                console.log(data);
+            }
+        })
+    })
+});

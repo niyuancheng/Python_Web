@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}主页{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+
+			*{
+				margin: 0px;
+				padding: 0px;
+				box-sizing: border-box;
+
+			}
+			body{
+				background: url({% static 'image/register/agag.jpg' %})  no-repeat center;
+			}
+			.rg_layout{
+				width: 800px;
+				height: 500px;
+				padding:40px 0 0 0;
+				border: 8px solid #EEEEEE;
+				background-color: white ;
+				margin:150px auto;  /*让div标签水平居中 */
+				opacity: 0.75; /* 设置透明度*/
+
+			}
+			.rg_left{
+				float: left;
+				margin: 15px;
+			}
+			.rg_center{
+				float: left;
+			}
+			.rg_right{
+				float: right;
+			}
+			.p_reg{
+				color: #ffd026;
+				font-size: 20px;
+			}
+			.p_en{
+				color: gray;
+				font-size: 20px;
+			}
+			.rg_right > p:first-child{
+				margin: 10px;
+			}
+			.rg_right p a{
+				color: pink;
+			}
+			.td_left{
+				width: 100px;
+				text-align: right;
+				height: 45px;
+			}
+			.td_right{
+				padding-left: 40px;
+
+			}
+			#password_again,#username,#password,#email,#name,#phone,#birthday,#checkcode{
+				width: 251px;
+				height: 32px;
+				border: 1px solid gray;
+				border-radius: 5px;   /* 设置边框圆角*/
+				padding-left: 15px;
+			}
+			#checkcode{
+				width: 110px;
+			}
+			#img_check{
+
+				height: 32px;
+				vertical-align: middle;  //垂直居中
+			}
+			#btn_sub{
+				width: 150px;
+				height: 40px;
+				background-color: #FFD026;
+				border: 1px solid  #FFD026;
+				border-radius: 6px;
+				/* font-weight: bold; */
+				margin-top: 20px;
+
+			}
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="rg_layout">
+        <div class="rg_left">
+            <p class="p_reg">新用户注册</p>
+            <p class="p_en">USER REGISTER</p>
+        </div>
+        <div class="rg_center">
+            <div class="re_form">
+                <form action="/register/" method="post">
+                    {% csrf_token %}
+
+                    {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                    <table>
+                        <tr>
+                            <td class="td_left"><label for="username">用户名</label></td>
+                            <td class="td_right"><input type="text" name="username" id="username" placeholder="请输入账号"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_left"><label for="password">密码</label></td>
+                            <td class="td_right"><input type="password" name="password" id="password" placeholder="请输入密码"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_left"><label for="password">重复密码</label></td>
+                            <td class="td_right"><input type="password" name="password_again" id="password_again" placeholder="请再次输入密码"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_left"><label for="email">Email</label></td>
+                            <td class="td_right"><input type="email" name=email id="email" placeholder="请输入Email"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_left"><label for="name">姓名</label></td>
+                            <td class="td_right"><input type="text" name="name" id="name" placeholder="请输入真实姓名"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_left"><label for="phone">手机号</label></td>
+                            <td class="td_right"><input type="text" name="phone" id="phone" placeholder="请输入您的手机号"></td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">性别</td>
+                            <td class="td_right">
+                                <input type="radio" name="gender" value="male">男
+                                <input type="radio" name="gender" value="female">女
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><input type="submit" id="btn_sub" value="注册"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="rg_right">
+            <p>已有账号？<a href="/login/">立即登录</a></p>
+        </div>
+    </div>
+{% endblock %}

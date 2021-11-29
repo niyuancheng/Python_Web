@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}日志记录{% endblock %}
+{% block css %}
+{% endblock %}
+{% block javascript %}
+  <script src="{% static 'javascript/usertext.js' %}"></script>
+{% endblock %}
+{% block content %}
+<h1 style="text-align:center">欢迎来到日志记录页面</h1>
+<form action="/usertext/" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label>你的日志标题</label>
+    <textarea class="form-control" rows="1" name="title"></textarea>
+  </div>
+  <div class="form-group">
+    <label>你的日志内容</label>
+    <textarea class="form-control" rows="4" name="content"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">点击提交你的日志</button>
+  {% if message %}
+  <div class="alert alert-warning">{{ message }}</div>
+  {% endif %}
+</form>
+<div>
+  <p style="color:purple">以下为{{ request.session.user_name }}的日志总览</p>
+</div>
+<table class="table table-hover">
+  <thead>
+    <th>编辑该日志</th>
+    <th>创建时间</th>
+    <th>日志标题</th>
+    <th>日志内容</th>
+
+  </thead>
+  <tbody>
+  {% for date in diary %}
+  <tr>
+    <td><!-- 按钮触发模态框，点击修改资料 -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#diary_{{ date.title }}">编辑日志</button>
+		<!-- 模态框（Modal） -->
+	  	<div class="modal fade" id="diary_{{ date.title }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myDiary">
+							编辑资料
+						</h4>
+					</div>
+					<div class="modal-body" style="text-align: center">
+						<form class="bs-example bs-example-form" role="form" id="Update" method="get" action="/usertext/">
+							{% csrf_token %}
+							<br>
+							<br>
+							<div class="form-group">
+								<label class="col-lg-3 control-label" >
+									当前日志标题:
+								</label>
+								<div class="col-lg-9">
+									<input type="text" class="form-control" value="{{ date.title }}" name="original_title">
+								</div>
+							</div>
+							<br>
+							<br>
+							<div class="form-group">
+								<label class="col-lg-3 control-label">
+									新的日志标题:
+								</label>
+								<div class="col-lg-9">
+									<input type="text" class="form-control" name="atitle"/>
+								</div>
+							</div>
+							<br>
+							<br>
+							<div class="form-group">
+								<label class="col-lg-3 control-label">
+									日志内容:
+								</label>
+								<div class="col-lg-9">
+									<input type="text" class="form-control" name="acontent"/>
+								</div>
+							</div>
+							<br>
+							<br>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+								关闭
+								</button>
+								<input type="submit" class="btn btn-primary" id="Update" value="保存修改" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+    <td>{{ date.time }}</td>
+    <td>{{ date.title }}</td>
+    <td>{{ date.content }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
